@@ -9,7 +9,6 @@ final Duration walkOfd = Duration(milliseconds: 2000);
 final Duration climbOfd = Duration(milliseconds: 6000);
 final Duration pushedOfd = Duration(milliseconds: 150);
 final Duration interval = Duration(seconds: 3);
-final Color transparency = Color(0);
 
 bool fail = false;
 bool canClear = false;
@@ -23,6 +22,7 @@ List<Alignment> youAlignments = [
   Alignment(1.2, -0.35),
   Alignment(0, 1),
 ];
+
 Duration d = Duration(microseconds: 0);
 
 String youState = "idle";
@@ -123,16 +123,6 @@ class _YouState extends State<You> {
     }
   }
 
-  void failResult() {
-    _timer.cancel();
-    showResult = true;
-  }
-
-  void clearResult() {
-    _timer.cancel();
-    showResult = true;
-  }
-
   void youAction() {
     if (fail) {
       switch (phase) {
@@ -152,7 +142,8 @@ class _YouState extends State<You> {
           _timer = Timer.periodic(
               interval,
               (_t) => setState(() {
-                    failResult();
+                    _timer.cancel();
+                    showResult = true;
                   }));
           youState = "lie";
       }
@@ -197,7 +188,8 @@ class _YouState extends State<You> {
           _timer = Timer.periodic(
               interval,
               (_t) => setState(() {
-                    clearResult();
+                    _timer.cancel();
+                    showResult = true;
                   }));
           youState = "clear";
       }
@@ -225,8 +217,8 @@ class _YouState extends State<You> {
         width: size.width / 3,
         height: size.height / 3,
         child: FlatButton(
-          highlightColor: transparency,
-          splashColor: transparency,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
           child: FlareActor(
             "assets/humanOfStick2.flr",
             animation: youState,
@@ -261,8 +253,8 @@ class _SecondFloorGimmikState extends State<SecondFloorGimmik> {
             height: size.height / 2,
             child: Stack(children: <Widget>[
               IconButton(
-                highlightColor: transparency,
-                splashColor: transparency,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 icon: Icon(Icons.menu),
                 onPressed: () {
                   setState(() {
@@ -303,8 +295,8 @@ class _SecondFloorGimmikTwoState extends State<SecondFloorGimmikTwo> {
             height: size.height / 2,
             child: Stack(children: <Widget>[
               IconButton(
-                highlightColor: transparency,
-                splashColor: transparency,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 icon: Icon(Icons.menu),
                 onPressed: () {
                   setState(() {

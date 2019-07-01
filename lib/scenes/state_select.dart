@@ -6,8 +6,6 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:you_i_adventure/scenes/gametitle.dart';
 
-bool reloadFlag = false;
-
 class StageSelect extends StatelessWidget {
   StageSelect({Key key, this.clearStageNum = ""}) : super(key: key);
   // This widget is the home page of your application. It is stateful, meaning
@@ -66,11 +64,11 @@ class _StageListState extends State<StageList> {
     if (clearStageNum != "") {
       if (!(prefs.getBool(clearStageNum) ?? false)) {
         clearNum++;
-        await prefs.setBool(clearStageNum, true);
+        prefs.setBool(clearStageNum, true);
       }
     }
     wait = false;
-    await prefs.setInt('clearNum', clearNum);
+    prefs.setInt('clearNum', clearNum);
     setState(() {});
     //await prefs.setBool("1", false);
   }
@@ -186,8 +184,7 @@ class _DeleteState extends State<Delete> {
 
   void deleteData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-    reloadFlag = true;
+    prefs.clear();
     //await prefs.setBool("1", false);
   }
 
@@ -236,8 +233,8 @@ class _DeleteState extends State<Delete> {
                   _phase++;
                 });
               } else {
-                Navigator.pop(context);
                 deleteData();
+                Navigator.pop(context);
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => GameTitle()));
               }
